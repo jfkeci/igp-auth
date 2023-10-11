@@ -1,5 +1,5 @@
+import crypto from 'crypto';
 import bcrypt from 'bcrypt';
-import { nanoid } from 'nanoid';
 import { Schema, model } from 'mongoose';
 import User from './interfaces/user.interface';
 
@@ -15,7 +15,7 @@ import User from './interfaces/user.interface';
  *           type: string
  *           description: User ID.
  *           example: 62124b4fbed6940f1b55d992
- *         name:
+ *         username:
  *           type: string
  *           description: User first name and last name.
  *           example: John Doe
@@ -57,7 +57,7 @@ const UserSchema = new Schema(
     },
     emailVerificationCode: {
       type: String,
-      default: () => nanoid(),
+      default: () => crypto.randomBytes(32).toString('hex'),
     },
     passwordResetCode: {
       type: String,
