@@ -6,7 +6,7 @@ export const LoggerMiddleware = (
   res: Response,
   next: NextFunction,
 ) => {
-  logger.info(
+  logger.http(
     `[${process.env.API_NAME}] ${req.method} ${
       req.originalUrl
     } \n ${JSON.stringify(req.body)}`,
