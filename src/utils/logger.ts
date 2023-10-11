@@ -15,6 +15,11 @@ export const logger = winston.createLogger({
     winston.format.timestamp({ format: 'dd-mm-YYYY hh:MM:ss' }),
     winston.format.errors({ stack: true }),
     winston.format.colorize({ colors }),
+    winston.format.printf(({ timestamp, level, message, label, stack }) => {
+      return `${timestamp} [${label || 'iGP Auth'}] ${level}: ${message}${
+        stack ? '\n' + stack : ''
+      }`;
+    }),
   ),
   transports: [
     new winston.transports.Console(),
