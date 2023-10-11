@@ -2,7 +2,7 @@ import swaggerJsDoc from 'swagger-jsdoc';
 
 export const swaggerDocs = swaggerJsDoc({
   definition: {
-    openapi: '1.0.0',
+    openapi: '3.0.0',
     info: {
       title: 'iGP Auth API',
       version: '1.0.0',
