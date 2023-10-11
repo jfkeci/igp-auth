@@ -7,7 +7,7 @@ export const LoggerMiddleware = (
   next: NextFunction,
 ) => {
   logger.info(
-    `[${process.env.APP_NAME}] ${req.method} ${
+    `[${process.env.API_NAME}] ${req.method} ${
       req.originalUrl
     } \n ${JSON.stringify(req.body)}`,
   );
