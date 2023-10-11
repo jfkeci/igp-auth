@@ -2,8 +2,6 @@ import nodemailer, { SendMailOptions, Transporter } from 'nodemailer';
 import { logger } from '../logger';
 
 export class EmailService {
-  constructor() {}
-
   private async createTestAccout(): Promise<nodemailer.TestAccount> {
     return await nodemailer.createTestAccount();
   }
