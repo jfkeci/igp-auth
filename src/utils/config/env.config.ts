@@ -8,8 +8,8 @@ interface EnvConfig {
 
 export class ConfigService {
   private envConfig: EnvConfig = {
-    port: process.env.PORT as string,
-    env: process.env.NODE_ENV as string,
+    port: process.env.API_PORT as string,
+    env: process.env.API_ENV as string,
     dbUrl: process.env.DATABASE_URL as string,
     jwtSecret: process.env.JWT_SECRET as string,
     jwtExpiry: Number(process.env.JWT_EXPIRY) as number,
