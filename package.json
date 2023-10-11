@@ -1,8 +1,12 @@
 {
   "name": "igp-auth",
   "version": "1.0.0",
-  "description": "",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "description": "iGP Auth",
   "main": "index.js",
+  "type": "commonjs",
   "scripts": {
     "test": "jest",
     "start": "node dist/index.js",
@@ -28,7 +32,6 @@
     "joi": "^17.11.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.6.1",
-    "nanoid": "^5.0.1",
     "nodemailer": "^6.9.6",
     "reflect-metadata": "^0.1.13",
     "swagger-jsdoc": "^6.2.8",
