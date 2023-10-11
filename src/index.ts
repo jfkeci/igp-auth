@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import { App } from './app';
-import { ConfigValidationService } from './utils/config/env-validation.config';
 import { AuthController } from './auth/auth.controller';
+import { ConfigValidationService } from './utils/config/env-validation.config';
 
 dotenv.config();
 

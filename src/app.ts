@@ -1,8 +1,8 @@
 import cors from 'cors';
 import helmet from 'helmet';
 import mongoose from 'mongoose';
-import { logger } from './utils/logger';
 import swaggerUi from 'swagger-ui-express';
+import { logger } from './utils/logger';
 import express, { Application } from 'express';
 import { ConfigService } from './utils/config/env.config';
 import { swaggerDocs } from './utils/config/swagger.config';
@@ -17,16 +17,19 @@ export class App {
   public express: Application;
 
   constructor(controllers: Controller[], port: number) {
+    logger.info(`Starting the app...`);
+
     this.config = new ConfigService();
 
     this.express = express();
     this.port = port;
 
     this.initMiddleware();
-    this.initControllers(controllers);
     this.initErrorMiddleware();
     this.initLoggerMiddleware();
     this.initSwagger();
+
+    this.initControllers(controllers);
 
     this.express.use('/api', (req, res) => {
       res.send('Welcome to iGP Auth API');
@@ -38,26 +41,28 @@ export class App {
   }
 
   private initMiddleware(): void {
-    console.log('initMiddleware');
     this.express.use(cors());
     this.express.use(helmet());
     // this.express.use(compression());
     this.express.use(express.json());
     this.express.use(express.urlencoded({ extended: false }));
+
+    logger.info('Middleware (cors, helmet, express) initialized');
   }
 
   private initErrorMiddleware(): void {
-    console.log('initErrorMiddleware');
+    logger.info('Error middleware initialized');
     this.express.use(ErrorMiddleware);
   }
 
   private initLoggerMiddleware(): void {
-    console.log('initLoggerMiddleware');
+    logger.info(`Logger middleware initialized`);
     this.express.use(LoggerMiddleware);
   }
 
   private initControllers(controllers: Controller[]): void {
     controllers.forEach((controller: Controller) => {
+      logger.info(`${controller.constructor.name} initialized`);
       this.express.use('/api/', controller.router);
     });
   }
@@ -66,12 +71,12 @@ export class App {
     this.express.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
   }
 
-  private initDbConnection(): void {
+  private async initDbConnection(): Promise<void> {
     const dbUrl = this.config.get<string>('dbUrl');
 
-    console.log(dbUrl);
-
-    mongoose.connect(dbUrl).then(() => logger.info('Connected to database'));
+    await mongoose
+      .connect(dbUrl)
+      .then(() => logger.info('Connected to database'));
   }
 
   public listen(): void {
