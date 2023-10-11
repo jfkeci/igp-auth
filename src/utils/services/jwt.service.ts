@@ -4,7 +4,7 @@ import { HttpException } from '../classes/http-exception.class';
 import { HttpStatus } from '../enums/http-status.enum';
 
 export interface GenUserTokenParams {
-  userId: string;
+  id: string;
   secret?: string;
   expiry?: string;
 }
@@ -21,12 +21,10 @@ export class JwtService {
     this.expiry = this.config.get<number>('jwtExpiry');
   }
 
-  genUserToken(data: GenUserTokenParams): string {
-    return jwt.sign(
-      { id: data.userId } as JwtPayload,
-      data.secret ?? this.secret,
-      { expiresIn: data.expiry ?? `${this.expiry}d` },
-    );
+  generateToken(data: GenUserTokenParams): string {
+    return jwt.sign({ id: data.id } as JwtPayload, data.secret ?? this.secret, {
+      expiresIn: data.expiry ?? `${this.expiry}d`,
+    });
   }
 
   private decode(token: string): JwtPayload | undefined {
