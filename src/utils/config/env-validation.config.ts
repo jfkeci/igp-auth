@@ -8,6 +8,8 @@ export class ConfigValidationService {
       .default('development'),
     DATABASE_URL: Joi.string().required(),
     API_KEY: Joi.string().required(),
+    JWT_SECRET: Joi.string().required(),
+    JWT_EXPIRY: Joi.number().required(),
   }).unknown();
 
   public validateEnv(): void {
