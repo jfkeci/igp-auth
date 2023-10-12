@@ -1,14 +1,16 @@
 import cors from 'cors';
 import helmet from 'helmet';
 import mongoose from 'mongoose';
-import swaggerUi from 'swagger-ui-express';
 import { logger } from './utils/logger';
+import swaggerUi from 'swagger-ui-express';
+import rateLimit from 'express-rate-limit';
 import express, { Application } from 'express';
 import { ConfigService } from './utils/config/env.config';
 import { swaggerDocs } from './utils/config/swagger.config';
 import Controller from './utils/interfaces/controller.interface';
 import { ErrorMiddleware } from './utils/middlewares/error.middleware';
 import { LoggerMiddleware } from './utils/middlewares/logger.middleware';
+import { rateLimiterConfig } from './utils/config/rate-limiter.config';
 
 export class App {
   private config: ConfigService;
@@ -45,6 +47,7 @@ export class App {
     this.express.use(helmet());
     // this.express.use(compression());
     this.express.use(express.json());
+    this.express.use(rateLimit(rateLimiterConfig()));
     this.express.use(express.urlencoded({ extended: false }));
 
     logger.info('Middleware (cors, helmet, express) initialized');
@@ -62,8 +65,9 @@ export class App {
 
   private initControllers(controllers: Controller[]): void {
     controllers.forEach((controller: Controller) => {
-      logger.info(`${controller.constructor.name} initialized`);
       this.express.use('/api/', controller.router);
+
+      logger.info(`${controller.constructor.name} initialized`);
     });
   }
 
