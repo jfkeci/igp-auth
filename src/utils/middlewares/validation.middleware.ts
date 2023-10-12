@@ -1,4 +1,5 @@
 import Joi from 'joi';
+import { logger } from '../logger';
 import { Request, Response, NextFunction, RequestHandler } from 'express';
 
 export const ValidationMiddleware = (schema: Joi.Schema): RequestHandler => {
@@ -22,6 +23,8 @@ export const ValidationMiddleware = (schema: Joi.Schema): RequestHandler => {
       const errors: string[] = [];
 
       e.details.forEach((error: Joi.ValidationErrorItem) => {
+        logger.error(`Validation error: ${error.message}`);
+
         errors.push(error.message);
       });
 
