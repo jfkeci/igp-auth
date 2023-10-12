@@ -9,8 +9,8 @@ import { ConfigService } from './utils/config/env.config';
 import { swaggerDocs } from './utils/config/swagger.config';
 import Controller from './utils/interfaces/controller.interface';
 import { ErrorMiddleware } from './utils/middlewares/error.middleware';
-import { LoggerMiddleware } from './utils/middlewares/logger.middleware';
 import { rateLimiterConfig } from './utils/config/rate-limiter.config';
+import { LoggerMiddleware } from './utils/middlewares/logger.middleware';
 
 export class App {
   private config: ConfigService;
@@ -32,6 +32,8 @@ export class App {
     this.initSwagger();
 
     this.initControllers(controllers);
+
+    this.initDbConnection();
 
     this.express.use('/api', (req, res) => {
       res.send('Welcome to iGP Auth API');
@@ -78,9 +80,13 @@ export class App {
   private async initDbConnection(): Promise<void> {
     const dbUrl = this.config.get<string>('dbUrl');
 
-    await mongoose
-      .connect(dbUrl)
-      .then(() => logger.info('Connected to database'));
+    try {
+      await mongoose
+        .connect(dbUrl)
+        .then(() => logger.info('Connected to database'));
+    } catch (error) {
+      throw new Error(`Database connection failed|${error}`);
+    }
   }
 
   public listen(): void {
