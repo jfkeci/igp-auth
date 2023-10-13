@@ -22,7 +22,7 @@ export class AuthService {
     let existingUser = await this.userService._findOne({ email: params.email });
 
     if (existingUser) {
-      throw new HttpException(HttpStatus.BAD_REQUEST, 'Email taken');
+      throw new HttpException(HttpStatus.CONFLICT, 'Email taken');
     }
 
     if (params.username) {
@@ -32,7 +32,7 @@ export class AuthService {
     }
 
     if (existingUser) {
-      throw new HttpException(HttpStatus.BAD_REQUEST, 'Username taken');
+      throw new HttpException(HttpStatus.CONFLICT, 'Username taken');
     }
 
     const user = await this.userService.createOne({
