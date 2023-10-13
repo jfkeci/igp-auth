@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { logger } from '../logger';
 import { Request, Response, NextFunction } from 'express';
 import { HttpException } from '../classes/http-exception.class';
 
@@ -9,7 +10,13 @@ export const ErrorMiddleware = (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _next: NextFunction,
 ): void => {
+  logger.error(error);
+
   const status = error instanceof HttpException ? error.status : 500;
+
+  logger.error(
+    `Error: ${error.message ?? 'Something went wrong'}\nStatus: ${status}`,
+  );
 
   if (error instanceof mongoose.Error.ValidationError) {
     res.status(400).json({ error: error.message });
