@@ -11,11 +11,12 @@
     "test": "jest",
     "start": "node dist/index.js",
     "dev": "tsc-watch --onSuccess \"node ./dist/index.js\"",
-    "build": "tsc -b",
+    "build": "tsc -b && npm run copy-assets",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write 'src/**/*.ts' 'test/**/*.ts'",
-    "format:check": "prettier --check 'src/**/*.ts' 'test/**/*.ts'"
+    "format:check": "prettier --check 'src/**/*.ts' 'test/**/*.ts'",
+    "copy-assets": "mkdir dist/public && cp src/public/* dist/public/"
   },
   "keywords": [],
   "author": "",
