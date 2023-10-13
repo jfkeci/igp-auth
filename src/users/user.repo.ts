@@ -1,5 +1,4 @@
 import {
-  Model,
   ObjectId,
   FilterQuery,
   UpdateQuery,
@@ -7,15 +6,11 @@ import {
   ProjectionType,
   UpdateWithAggregationPipeline,
 } from 'mongoose';
-import UserSchema from './user.schema';
+import userSchema from './user.schema';
 import User from './interfaces/user.interface';
 
 export class UserRepo {
-  private user = UserSchema;
-
-  schemaInstance(): Model<User> {
-    return this.user;
-  }
+  private user = userSchema;
 
   async _findById(
     id: string | ObjectId,
@@ -75,5 +70,13 @@ export class UserRepo {
     const user = new this.user(data);
 
     return await user.save();
+  }
+
+  async _find(
+    filter?: FilterQuery<User>,
+    projection?: ProjectionType<User> | null,
+    options?: QueryOptions<User> | null,
+  ): Promise<User[]> {
+    return await this.user.find(filter ?? {}, projection, options);
   }
 }
