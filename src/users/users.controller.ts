@@ -10,11 +10,9 @@ import { ResponseFormat } from '../utils/interfaces/response-format.interface';
 export class UsersController implements Controller {
   public router = Router();
 
-  private userService: UserService;
+  private userService = new UserService();
 
   constructor() {
-    this.userService = new UserService();
-
     this.initRoutes();
   }
 

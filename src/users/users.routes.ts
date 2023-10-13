@@ -19,7 +19,7 @@ export class UserRoutes {
       logger.info(
         `${controller.constructor.name} GET ${apiPrefix}${this.path} route`,
       );
-      this.router.get(`${this.path}`, controller.getUsers);
+      this.router.get(`${this.path}`, controller.getUsers.bind(controller));
     }
 
     return this.router;
