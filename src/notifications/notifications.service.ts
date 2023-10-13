@@ -12,6 +12,14 @@ import Notification from './interfaces/notification.interface';
 export class NotificationService {
   private notification = NotificationSchema;
 
+  async _find(
+    filter?: FilterQuery<Notification>,
+    projection?: ProjectionType<Notification> | null,
+    options?: QueryOptions<Notification> | null,
+  ): Promise<Notification[]> {
+    return await this.notification.find(filter ?? {}, projection, options);
+  }
+
   async _findById(
     id: string | ObjectId,
     projection?: ProjectionType<Notification> | null,
