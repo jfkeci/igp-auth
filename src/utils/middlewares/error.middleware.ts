@@ -8,9 +8,11 @@ export const ErrorMiddleware = (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _next: NextFunction,
 ): void => {
-  const status = error.status || 500;
+  const status = error instanceof HttpException ? error.status : 500;
+
   const message = error.message || 'Something went wrong';
-  res.status(status).send({
+
+  res.status(status).json({
     status,
     message,
   });
