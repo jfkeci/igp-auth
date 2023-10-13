@@ -26,12 +26,14 @@ export class App {
     this.express = express();
     this.port = port;
 
-    this.initMiddleware();
-    this.initErrorMiddleware();
-    this.initLoggerMiddleware();
     this.initSwagger();
 
+    this.initMiddleware();
+
     this.initControllers(controllers);
+
+    this.initErrorMiddleware();
+    this.initLoggerMiddleware();
 
     this.initDbConnection();
 
