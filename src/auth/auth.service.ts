@@ -66,7 +66,7 @@ export class AuthService {
       await this.emailService.sendEmail({
         from: 'sportscomplex@info.com',
         to: user.email,
-        subject: 'SportsComplex account verification',
+        subject: 'iGP Auth account verification',
         html: `<html><h1>Confirm account</h1>
         <br><hr><br>
         <h3>Verification code: ${user.emailVerificationCode}</h3>
