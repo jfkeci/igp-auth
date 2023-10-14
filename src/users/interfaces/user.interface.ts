@@ -1,3 +1,5 @@
+import mongoose from 'mongoose';
+
 export default interface User extends Document {
   _id: string;
   username?: string | null;
@@ -8,5 +10,8 @@ export default interface User extends Document {
   passwordResetCode?: string | null;
   token?: string;
 
-  isValidPassword(password: string): Promise<Error | boolean>;
+  createdAt: mongoose.Date;
+  updatedAt: mongoose.Date;
+
+  isModified: (property: string) => boolean;
 }
