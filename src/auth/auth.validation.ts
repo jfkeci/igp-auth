@@ -20,3 +20,14 @@ export const loginValidationSchema = Joi.object({
     'min.max': 'Invalid password',
   }),
 });
+
+export const verifyEmailParamsValidationSchema = Joi.object({
+  userId: Joi.string().required().messages({
+    required: 'User id param required',
+    string: 'Invalid user id',
+  }),
+  token: Joi.string().required().messages({
+    required: 'Email verification token required',
+    string: 'Invalid email verification token',
+  }),
+});
