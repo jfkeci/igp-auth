@@ -35,4 +35,23 @@ export class UserNotificationsController {
 
     return res.status(HttpStatus.OK).json(response);
   }
+
+  async createUserNotification(req: Request, res: Response) {
+    const { userId } = req.params;
+    const { title, body } = req.body;
+
+    const result = await this.userNotificationService.createUserNotification({
+      userId,
+      title,
+      body,
+    });
+
+    const response: ResponseFormat<Notification> = {
+      status: HttpStatus.CREATED,
+      type: ResponseType.Notification,
+      data: result,
+    };
+
+    res.status(HttpStatus.CREATED).json(response);
+  }
 }
