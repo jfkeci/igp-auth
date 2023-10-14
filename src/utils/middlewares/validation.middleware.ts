@@ -2,12 +2,17 @@ import Joi from 'joi';
 import { logger } from '../logger';
 import { Request, Response, NextFunction, RequestHandler } from 'express';
 
-export const ValidationMiddleware = (schema: Joi.Schema): RequestHandler => {
+export const ValidationMiddleware = (
+  schema: Joi.Schema,
+  subject?: 'body' | 'params' | 'query',
+): RequestHandler => {
   return async (
     req: Request,
     res: Response,
     next: NextFunction,
   ): Promise<void> => {
+    subject = subject ?? 'body';
+
     const validationOptions = {
       abortEarly: false,
       allowUnknown: true,
@@ -15,7 +20,20 @@ export const ValidationMiddleware = (schema: Joi.Schema): RequestHandler => {
     };
 
     try {
-      const value = await schema.validateAsync(req.body, validationOptions);
+      let value;
+
+      switch (subject) {
+        case 'params':
+          value = await schema.validateAsync(req.params, validationOptions);
+          break;
+        case 'query':
+          value = await schema.validateAsync(req.query, validationOptions);
+          break;
+        default:
+          value = await schema.validateAsync(req.body, validationOptions);
+          break;
+      }
+
       req.body = value;
       next();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
