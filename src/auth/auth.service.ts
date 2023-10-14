@@ -11,18 +11,21 @@ import { HttpException } from '../utils/classes/http-exception.class';
 import { RedirectUrl } from '../utils/interfaces/redirect-uri.interface';
 import { LoginUserParams } from './interfaces/login-user-params.interface';
 import { RegisterUserParams } from './interfaces/register-user-params.interface';
+import { UserNotificationService } from '../user-notifications/user-notifications.service';
 
 export class AuthService {
   private config: ConfigService;
   private jwtService: JwtService;
   private userService: UserService;
   private emailService: EmailService;
+  private userNotificationService: UserNotificationService;
 
   constructor() {
     this.config = new ConfigService();
     this.jwtService = new JwtService();
     this.userService = new UserService();
     this.emailService = new EmailService();
+    this.userNotificationService = new UserNotificationService();
   }
 
   async registerUser(
@@ -96,7 +99,7 @@ export class AuthService {
     }
 
     const isValidPassword = await bcrypt.compare(
-      params.password,
+      params.password as string,
       user.password as string,
     );
 
@@ -148,10 +151,23 @@ export class AuthService {
       id: user._id.toString(),
     });
 
-    /**
-     * TODO
-     * - change redirect url
-     */
+    new Promise<void>((resolve, reject) => {
+      setImmediate(async () => {
+        try {
+          await this.userNotificationService.createUserNotification({
+            userId: user._id as string,
+            title: 'Account creation completed',
+            body: 'Your email is verified',
+          });
+        } catch (error) {
+          logger.error(error);
+          reject(error);
+        }
+
+        resolve();
+      });
+    });
+
     return {
       url: `${origin}/api/pages/confirm-email?userId=${user._id}&token=${authToken}`,
     };
