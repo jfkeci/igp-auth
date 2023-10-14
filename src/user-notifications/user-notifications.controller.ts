@@ -1,10 +1,10 @@
 import { Request, Response, Router } from 'express';
 import { HttpStatus } from '../utils/enums/http-status.enum';
 import { ResponseType } from '../utils/enums/response-type.enum';
-import { UserNotificationRoutes } from './user-notifications.rotues';
+import { UserNotificationRoutes } from './user-notifications.routes';
 import { UserNotificationService } from './user-notifications.service';
-import { ResponseFormat } from '../utils/interfaces/response-format.interface';
 import Notification from '../notifications/interfaces/notification.interface';
+import { ResponseFormat } from '../utils/interfaces/response-format.interface';
 
 export class UserNotificationsController {
   public router = Router();
