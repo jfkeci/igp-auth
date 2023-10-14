@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import { logger } from '../logger';
 import { Request, Response, NextFunction } from 'express';
 import { HttpException } from '../classes/http-exception.class';
@@ -17,18 +16,6 @@ export const ErrorMiddleware = (
   logger.error(
     `Error: ${error.message ?? 'Something went wrong'}\nStatus: ${status}`,
   );
-
-  if (error instanceof mongoose.Error.ValidationError) {
-    res.status(400).json({ error: error.message });
-  }
-
-  if (error.status === 11000) {
-    res.status(409).json({ status: 409, error: 'Duplicate key error' });
-  }
-
-  if (error instanceof mongoose.Error.CastError) {
-    res.status(400).json({ error: 'Invalid ID format' });
-  }
 
   const message = error.message || 'Something went wrong';
 
