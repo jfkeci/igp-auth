@@ -9,7 +9,7 @@ import { createUserNotificationValidationSchema } from './user-notifications.val
 
 export class UserNotificationRoutes {
   private router = Router();
-  private path = '/:userId/notifications';
+  private path = '/users/:userId/notifications';
 
   private config = new ConfigService();
 
@@ -21,7 +21,7 @@ export class UserNotificationRoutes {
       `${controller.constructor.name} get ${apiPrefix}${this.path} route`,
     );
     this.router.get(
-      ``,
+      `${this.path}`,
       [
         AuthMiddleware(),
         ValidationMiddleware(userIdParamValidationSchema, 'params'),
@@ -34,7 +34,7 @@ export class UserNotificationRoutes {
       `${controller.constructor.name} POST ${apiPrefix}${this.path} route`,
     );
     this.router.post(
-      ``,
+      `${this.path}`,
       [
         AuthMiddleware(),
         ValidationMiddleware(userIdParamValidationSchema, 'params'),
