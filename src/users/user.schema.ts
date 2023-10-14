@@ -23,10 +23,6 @@ import User from './interfaces/user.interface';
  *           type: string
  *           description: User email.
  *           example: john.doe@mail.com
- *         password:
- *           type: string
- *           description: User password, hashed with bcryptjs.
- *           example: $2a$12$qkd8Fk/kN5UFPuT25b3kpum/xr4pSCHZwlk3Ho9Oa6DVCrBhV45RW
  *         createdAt:
  *           type: string
  *           description: Date and time when the user was created

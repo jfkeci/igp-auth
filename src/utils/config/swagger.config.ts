@@ -16,5 +16,5 @@ export const swaggerDocs = swaggerJsDoc({
     host: 'http://localhost:3000',
     basePath: '/api',
   },
-  apis: ['../../**/*.model.ts', '../../**/*.routes.ts'],
+  apis: ['../../**/*.schema.ts', '../../**/*.routes.ts'],
 });
