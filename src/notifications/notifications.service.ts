@@ -12,4 +12,8 @@ export class NotificationService {
   ): Promise<Notification[]> {
     return await this.notificationRepo._find(filter ?? {}, projection, options);
   }
+
+  async _createOne(data: Partial<Notification>): Promise<Notification> {
+    return this.notificationRepo._createOne(data);
+  }
 }
