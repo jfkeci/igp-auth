@@ -2,7 +2,7 @@ import { ErrorType } from '../enums/error-type.enum';
 import { HttpStatus } from '../enums/http-status.enum';
 
 export class HttpException extends Error {
-  public status: number;
+  public status: HttpStatus;
   public message: string;
 
   public type?: ErrorType;
