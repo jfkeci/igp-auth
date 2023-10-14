@@ -23,7 +23,13 @@ cp .env.example .env
 ```
 - Set valid env variables to run the app
 
-5. Run the app
+5. Run the build
+```bash
+npm run build
+```
+- you don't normally need to do this for development, but i've made a static app for notification testing that is being served by the express api and this is required so that the index.html from the src/public directory gets copied to the dist directory
+
+6. Run the app
 ```bash
 npm run dev
 ```
