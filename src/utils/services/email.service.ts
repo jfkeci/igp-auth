@@ -1,5 +1,5 @@
-import nodemailer, { SendMailOptions, Transporter } from 'nodemailer';
 import { logger } from '../logger';
+import nodemailer, { SendMailOptions, Transporter } from 'nodemailer';
 
 export class EmailService {
   private async createTestAccout(): Promise<nodemailer.TestAccount> {

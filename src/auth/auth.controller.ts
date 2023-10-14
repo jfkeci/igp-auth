@@ -8,6 +8,7 @@ import Controller from '../utils/interfaces/controller.interface';
 import { LoginUserParams } from './interfaces/login-user-params.interface';
 import { ResponseFormat } from '../utils/interfaces/response-format.interface';
 import { RegisterUserParams } from './interfaces/register-user-params.interface';
+import { getRequestOrigin } from '../utils/request-origin.util';
 
 export class AuthController implements Controller {
   public router = Router();
@@ -52,23 +53,43 @@ export class AuthController implements Controller {
     res: Response,
     next: NextFunction,
   ): Promise<void> {
+    const origin = getRequestOrigin(req);
+
     const { username, email, password, confirmPassword } = req.body;
 
     try {
-      const result = await this.authService.registerUser({
-        confirmPassword,
-        password,
-        username,
-        email,
-      } as RegisterUserParams);
+      await this.authService.registerUser(
+        {
+          confirmPassword,
+          password,
+          username,
+          email,
+        } as RegisterUserParams,
+        origin,
+      );
 
-      const response: ResponseFormat<User> = {
-        type: ResponseType.User,
-        status: HttpStatus.CREATED,
-        data: result,
-      };
+      res.status(HttpStatus.NO_CONTENT).send();
+    } catch (error) {
+      next(error);
+    }
+  }
 
-      res.status(HttpStatus.CREATED).json(response);
+  async verifyUserEmail(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> {
+    const origin = getRequestOrigin(req);
+
+    try {
+      const { userId, token } = req.query;
+
+      const result = await this.authService.verifyEmail(
+        { userId: userId as string, token: token as string },
+        origin,
+      );
+
+      res.status(HttpStatus.SEE_OTHER).redirect(result.url);
     } catch (error) {
       next(error);
     }

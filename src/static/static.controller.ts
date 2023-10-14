@@ -1,7 +1,7 @@
+import path from 'path';
+import { StaticRoutes } from './static.rotues';
 import { Request, Response, Router } from 'express';
 import Controller from '../utils/interfaces/controller.interface';
-import { StaticRoutes } from './static.rotues';
-import path from 'path';
 
 export class StaticController implements Controller {
   public router = Router();

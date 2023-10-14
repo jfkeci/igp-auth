@@ -1,4 +1,4 @@
 export interface VerifyEmailParams {
   userId: string;
-  code: string;
+  token: string;
 }

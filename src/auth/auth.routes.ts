@@ -1,6 +1,7 @@
 import {
   loginValidationSchema,
   registerValidationSchema,
+  verifyEmailParamsValidationSchema,
 } from './auth.validation';
 import { Router } from 'express';
 import { AuthController } from './auth.controller';
@@ -37,11 +38,15 @@ export class AuthRoutes {
       controller.registerUser.bind(controller),
     );
 
-    // [ ] Verify user
-
-    // [ ] Set passwordResetCode and send email for password reset
-
-    // [ ] Reset user password
+    // [ ] Verify user email
+    logger.info(
+      `${controller.constructor.name} GET ${apiPrefix}${this.path}/emails/verify route`,
+    );
+    this.router.get(
+      `${this.path}/emails/verify`,
+      [ValidationMiddleware(verifyEmailParamsValidationSchema, 'query')],
+      controller.verifyUserEmail.bind(controller),
+    );
 
     return this.router;
   }
