@@ -82,7 +82,10 @@ export class AuthService {
       );
     }
 
-    return user;
+    return {
+      ...user,
+      password: null,
+    };
   }
 
   async loginUser(params: LoginUserParams): Promise<User> {
@@ -94,7 +97,7 @@ export class AuthService {
 
     const isValidPassword = await bcrypt.compare(
       params.password,
-      user.password,
+      user.password as string,
     );
 
     if (!isValidPassword) {
@@ -108,7 +111,7 @@ export class AuthService {
       id: user._id.toString(),
     });
 
-    return { ...user };
+    return { ...user, password: null };
   }
 
   async verifyEmail(

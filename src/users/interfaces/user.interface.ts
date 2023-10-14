@@ -2,7 +2,7 @@ export default interface User extends Document {
   _id: string;
   username?: string | null;
   email: string;
-  password: string;
+  password: string | null;
   isEmailVerified: boolean;
   emailVerificationCode?: string | null;
   passwordResetCode?: string | null;
