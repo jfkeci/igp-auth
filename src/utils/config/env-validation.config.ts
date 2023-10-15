@@ -11,6 +11,8 @@ export class ConfigValidationService {
     API_NAME: Joi.string().required(),
     JWT_SECRET: Joi.string().required(),
     JWT_EXPIRY: Joi.number().required(),
+    LOG_LEVEL: Joi.string().required(),
+    LOG_ROTATION_ENABLED: Joi.boolean().required(),
   }).unknown();
 
   public validateEnv(): void {
