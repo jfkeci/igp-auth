@@ -36,7 +36,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"tester11@gmail.com\",\n    \"password\": \"test1234\"\n}",
+							"raw": "{\n    \"email\": \"tester7@gmail.com\",\n    \"password\": \"test1234\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -55,7 +55,374 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Email not verified",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"tester9@gmail.com\",\n    \"password\": \"test1234\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "30"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "28"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 14 Oct 2023 17:04:35 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1697303130"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "45"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2d-FyOytEBTfDf+4fuaXpMZtUwxsIQ\""
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 500,\n    \"message\": \"Email not verified\"\n}"
+						},
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"tester9@gmail.com\",\n    \"password\": \"test1234\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "30"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "25"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 14 Oct 2023 17:04:55 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1697303130"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "455"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1c7-roX73NjUHjUdHUID0CBBV3EhKpo\""
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"type\": \"user\",\n    \"status\": 200,\n    \"data\": {\n        \"_id\": \"652aca1d1163d6cf0f67853a\",\n        \"username\": \"tester9\",\n        \"email\": \"tester9@gmail.com\",\n        \"password\": null,\n        \"isEmailVerified\": true,\n        \"emailVerificationCode\": null,\n        \"createdAt\": \"2023-10-14T17:04:29.439Z\",\n        \"updatedAt\": \"2023-10-14T17:04:42.134Z\",\n        \"__v\": 0,\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MmFjYTFkMTE2M2Q2Y2YwZjY3ODUzYSIsImlhdCI6MTY5NzMwMzA5NSwiZXhwIjoxNjk5ODk1MDk1fQ.XCOP1ijXsrU_F8sCV7j0dcAgRV14FfBrGKpGJP2nLNk\"\n    }\n}"
+						},
+						{
+							"name": "200 - valid response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"tester12@gmail.com\",\n    \"password\": \"test1234\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "30"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "22"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 14 Oct 2023 18:05:06 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1697306763"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "457"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1c9-Tt7ekIYjVau3VvoQ0k+DI2TpYlc\""
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"type\": \"user\",\n    \"status\": 200,\n    \"data\": {\n        \"_id\": \"652ad57c514e4fe2e5a8b748\",\n        \"username\": \"tester12\",\n        \"email\": \"tester12@gmail.com\",\n        \"password\": null,\n        \"isEmailVerified\": true,\n        \"emailVerificationCode\": null,\n        \"createdAt\": \"2023-10-14T17:53:00.218Z\",\n        \"updatedAt\": \"2023-10-14T17:53:03.211Z\",\n        \"__v\": 0,\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MmFkNTdjNTE0ZTRmZTJlNWE4Yjc0OCIsImlhdCI6MTY5NzMwNjcwNiwiZXhwIjoxNjk5ODk4NzA2fQ.W96bH0FYNPKba45pDvjin-YjJd_CeweLEHomXIFqdsw\"\n    }\n}"
+						}
+					]
 				},
 				{
 					"name": "Register User",
@@ -64,7 +431,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"tester6\",\n    \"email\": \"tester6@gmail.com\",\n    \"password\": \"test1234\",\n    \"confirmPassword\": \"test1234\"\n}",
+							"raw": "{\n    \"username\": \"tester8\",\n    \"email\": \"tester8@gmail.com\",\n    \"password\": \"test1234\",\n    \"confirmPassword\": \"test1234\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -250,18 +617,148 @@
 							"variable": [
 								{
 									"key": "userId",
-									"value": ""
+									"value": "{{userId}}"
 								}
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "200 - valid response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/users/:userId/notifications",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"users",
+										":userId",
+										"notifications"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "{{userId}}"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "30"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "28"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 14 Oct 2023 17:20:37 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1697304069"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "271"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"10f-wrE83454iGCW0yeqgYkMyD3Qv24\""
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"type\": \"notification\",\n    \"data\": [\n        {\n            \"_id\": \"652acbc90e8d4165b476f806\",\n            \"title\": \"Account creation completed\",\n            \"body\": \"Your email is verified\",\n            \"userId\": \"652acbc60e8d4165b476f802\",\n            \"createdAt\": \"2023-10-14T17:11:37.370Z\",\n            \"updatedAt\": \"2023-10-14T17:11:37.370Z\",\n            \"__v\": 0\n        }\n    ]\n}"
+						}
+					]
 				},
 				{
 					"name": "Create user notification",
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Notification Title\",\n    \"body\": \"Notification body\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{baseUrl}}/api/users/:userId/notifications",
 							"host": [
@@ -276,16 +773,156 @@
 							"variable": [
 								{
 									"key": "userId",
-									"value": ""
+									"value": "{{userId}}"
 								}
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "201 - valid response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Notification Title\",\n    \"body\": \"Notification body\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/users/:userId/notifications",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"users",
+										":userId",
+										"notifications"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "{{userId}}"
+										}
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "30"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "29"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 15 Oct 2023 12:19:47 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1697372448"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "232"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"e8-I1qg1rEEucMwFYx/pHGGfuQDR98\""
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 201,\n    \"type\": \"notification\",\n    \"data\": {\n        \"title\": \"Banana\",\n        \"body\": \"Mango\",\n        \"userId\": \"652ad57c514e4fe2e5a8b748\",\n        \"_id\": \"652bd8e323972d7a922f13ae\",\n        \"createdAt\": \"2023-10-15T12:19:47.246Z\",\n        \"updatedAt\": \"2023-10-15T12:19:47.246Z\",\n        \"__v\": 0\n    }\n}"
+						}
+					]
 				}
 			]
 		}
 	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{authToken}}",
+				"type": "string"
+			}
+		]
+	},
 	"event": [
 		{
 			"listen": "prerequest",
