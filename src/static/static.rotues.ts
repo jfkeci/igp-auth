@@ -10,10 +10,9 @@ export class StaticRoutes {
   private config = new ConfigService();
 
   public init(controller: StaticController): Router {
-    const apiEnv = this.config.get<string>('env');
     const apiPrefix = this.config.get<string>('prefix');
 
-    if (apiEnv === 'development') {
+    if (this.config.isEnv('development')) {
       // [x] Serve confirm email pages
       logger.info(
         `${controller.constructor.name} GET ${apiPrefix}${this.path}/confirm-email route`,
