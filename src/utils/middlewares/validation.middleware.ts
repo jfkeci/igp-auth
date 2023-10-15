@@ -25,16 +25,21 @@ export const ValidationMiddleware = (
       switch (subject) {
         case 'params':
           value = await schema.validateAsync(req.params, validationOptions);
+
+          req.params = value;
           break;
         case 'query':
           value = await schema.validateAsync(req.query, validationOptions);
+
+          req.query = value;
           break;
         default:
           value = await schema.validateAsync(req.body, validationOptions);
+
+          req.body = value;
           break;
       }
 
-      req.body = value;
       next();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
