@@ -44,7 +44,7 @@ export class JwtService {
     return undefined;
   }
 
-  verify(token: string): JwtPayload | undefined {
+  verify(token: string): string | undefined {
     try {
       const { id } = jwt.verify(token, this.secret) as JwtPayload;
 
@@ -87,15 +87,11 @@ export class JwtService {
     return null;
   }
 
-  getUserIdFromAuthHeaders(req: Request): string | null {
+  getUserIdFromAuthHeaders(req: Request): string | undefined {
     const token = this.getTokenFromHeaders(req);
 
-    if (token) {
-      const verified = this.verify(token);
+    if (token) return this.verify(token);
 
-      if (verified) return verified.id;
-    }
-
-    return null;
+    return undefined;
   }
 }
