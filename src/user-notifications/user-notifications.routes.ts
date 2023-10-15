@@ -38,7 +38,7 @@ export class UserNotificationRoutes {
       [
         AuthMiddleware(),
         ValidationMiddleware(userIdParamValidationSchema, 'params'),
-        ValidationMiddleware(createUserNotificationValidationSchema, 'body'),
+        ValidationMiddleware(createUserNotificationValidationSchema),
       ],
       controller.createUserNotification.bind(controller),
     );
