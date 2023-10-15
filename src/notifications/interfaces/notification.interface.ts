@@ -8,4 +8,6 @@ export default interface Notification extends Document {
 
   createdAt: mongoose.Date;
   updatedAt: mongoose.Date;
+
+  isModified: (property: string) => boolean;
 }
