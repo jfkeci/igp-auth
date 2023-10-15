@@ -1,22 +1,28 @@
 import cors from 'cors';
 import helmet from 'helmet';
 import mongoose from 'mongoose';
+import compression from 'compression';
 import { logger } from './utils/logger';
 import swaggerUi from 'swagger-ui-express';
 import rateLimit from 'express-rate-limit';
 import express, { Application } from 'express';
+import { Server as IOServer } from 'socket.io';
+import { createServer, Server as HttpServer } from 'http';
 import { ConfigService } from './utils/config/env.config';
 import { swaggerDocs } from './utils/config/swagger.config';
 import Controller from './utils/interfaces/controller.interface';
 import { ErrorMiddleware } from './utils/middlewares/error.middleware';
 import { rateLimiterConfig } from './utils/config/rate-limiter.config';
 import { LoggerMiddleware } from './utils/middlewares/logger.middleware';
+import { UserNotificationsGateway } from './user-notifications/user-notifications.gateway';
 
 export class App {
   private config: ConfigService;
 
   public port: number;
+  public io: IOServer;
   public express: Application;
+  public httpServer: HttpServer;
 
   constructor(controllers: Controller[], port: number) {
     logger.info(`Starting the app...`);
@@ -30,8 +36,6 @@ export class App {
 
     this.initMiddleware();
 
-    this.initControllers(controllers);
-
     this.initErrorMiddleware();
     this.initLoggerMiddleware();
 
@@ -44,12 +48,22 @@ export class App {
     this.express.use('/', (req, res) => {
       res.send('Welcome to iGP Auth API');
     });
+
+    this.httpServer = createServer(this.express);
+
+    this.io = new IOServer(this.httpServer, {
+      cors: { origin: '*' },
+    });
+
+    this.initGateways(this.io);
+
+    this.initControllers(controllers);
   }
 
   private initMiddleware(): void {
     this.express.use(cors());
     this.express.use(helmet());
-    // this.express.use(compression());
+    this.express.use(compression());
     this.express.use(express.json());
     this.express.use(rateLimit(rateLimiterConfig()));
     this.express.use(express.urlencoded({ extended: false }));
@@ -75,6 +89,10 @@ export class App {
     });
   }
 
+  private initGateways(io: IOServer): void {
+    new UserNotificationsGateway(io);
+  }
+
   private initSwagger(): void {
     this.express.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
   }
@@ -92,7 +110,7 @@ export class App {
   }
 
   public listen(): void {
-    this.express.listen(this.port, () => {
+    this.httpServer.listen(this.port, () => {
       logger.info(`App listening on port ${this.port}`);
     });
   }
