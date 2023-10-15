@@ -10,11 +10,10 @@ export class UserRoutes {
   private config = new ConfigService();
 
   public init(controller: UsersController): Router {
-    const apiEnv = this.config.get<string>('env');
     const apiPrefix = this.config.get<string>('prefix');
 
     // Get users routes is available only for development testing
-    if (apiEnv === 'development') {
+    if (this.config.isEnv('development')) {
       // [x] Get users
       logger.info(
         `${controller.constructor.name} GET ${apiPrefix}${this.path} route`,
