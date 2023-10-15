@@ -1,7 +1,7 @@
-import Notification from '../notifications/interfaces/notification.interface';
-import { NotificationService } from '../notifications/notifications.service';
-import { HttpException } from '../utils/classes/http-exception.class';
 import { HttpStatus } from '../utils/enums/http-status.enum';
+import { HttpException } from '../utils/classes/http-exception.class';
+import { NotificationService } from '../notifications/notifications.service';
+import Notification from '../notifications/interfaces/notification.interface';
 import { CreateUserNotificationParams } from './interface/create-user-notification-params.interface';
 
 export class UserNotificationService {
