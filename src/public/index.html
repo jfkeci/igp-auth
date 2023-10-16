@@ -7,6 +7,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>iGP Auth</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"
+    integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"
+    crossorigin="anonymous"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            clifford: '#da373d',
+          }
+        }
+      }
+    }
+  </script>
+
 </head>
 
 <body class="bg-gray-100 py-16">
@@ -14,41 +31,23 @@
   <div class="max-w-2xl mx-auto px-4 py-8 bg-white shadow rounded-lg">
 
     <div class="text-center mb-8">
-      <h2 class="text-2xl font-semibold mb-4">Confirm Your Email</h2>
-      <p class="text-gray-700">To complete the registration process, please verify your email address by clicking the
-        button below.</p>
+      <h2 class="text-2xl font-semibold mb-4">iGP Auth</h2>
+      <p class="text-gray-700">Your email was successfully verified</p>
     </div>
 
-    <div class="text-center mb-6">
-      <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-full shadow">
-        Confirm Email Address
-      </a>
+    <div class="mb-6" id="error-div">
+      <h3 class="font-semibold mb-4 text-center">Errors</h3>
+      <ul class="space-y-2" id="error-list"></ul>
     </div>
 
-    <div class="mb-6">
+    <div class="mb-6" id="notification-div">
       <h3 class="font-semibold mb-4 text-center">Your Notifications</h3>
-      <ul class="space-y-2">
-        <li class="cursor-pointer rounded">
-          <div
-            class="flex items-center p-4 text-sm text-gray-800 border border-gray-300 rounded-lg bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600"
-            role="alert">
-            <svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor" viewBox="0 0 20 20">
-              <path
-                d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-            </svg>
-            <span class="sr-only">Info</span>
-            <div>
-              <span class="font-medium">Notification title</span> Notification body
-            </div>
-          </div>
-        </li>
-      </ul>
+      <ul class="space-y-2" id="notification-list"></ul>
     </div>
 
     <div class="text-center">
       <button class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-full shadow"
-        id="notify-me-button">
+        id="notify-me-button" onclick="createNewNotification()">
         Notify Me
       </button>
     </div>
@@ -57,9 +56,205 @@
 
 
   <script>
-    const baseURL = window.location.origin;
+    const baseURL = 'http://localhost:3000' // window.location.origin;
 
-    console.log('baseURL', baseURL)
+    const USER_ID = '';
+    const AUTH_TOKEN = '';
+
+    let token;
+    let userId;
+    let notifications;
+
+    let counter;
+
+    let socket
+
+    document.addEventListener("DOMContentLoaded", function () {
+      getIdAndTokenParams();
+
+      if (!userId || !token) return;
+
+      socket = io(baseURL, { query: { token: token } })
+
+      getUserNotifications();
+
+      socket.on('connect', function () {
+        console.log('Connected!')
+
+        socket.on('new-notification', function (newNotification) {
+          console.log('Received:', newNotification);
+
+          appendNotification(newNotification.title, newNotification.body)
+        });
+      });
+
+      socket.on('authentication-error', error => {
+        console.log('authentication-error', error)
+        appendError('authentication-error', error)
+      })
+
+      socket.on('authorization-error', error => {
+        console.log('authorization-error', error)
+        appendError('authorization-error', error)
+      })
+
+      socket.on('validation-error', error => {
+        console.log('validation-error', error);
+        appendError('validation-error', error)
+      });
+    });
+
+    const renderNotifications = () => {
+      const list = document.getElementById('notification-list');
+
+      list.innerHTML = '';
+
+      for (const notification of notifications) {
+        appendNotification(notification.title, notification.body ?? '')
+      }
+    }
+
+
+    const displayErrors = (display) => {
+      const element = document.getElementById('error-div');
+
+      if (display) {
+        element.style.display = 'block';
+      } else {
+        element.style.display = 'none';
+      }
+    };
+
+    const getUserNotifications = async () => {
+      const headers = new Headers();
+      headers.append("Authorization", `Bearer ${token}`);
+
+      const requestOptions = { method: 'GET', headers, redirect: 'follow' };
+
+      try {
+        fetch(`${baseURL}/api/users/${userId}/notifications`, requestOptions)
+          .then(response => response.json())
+          .then(result => {
+            notifications = result.data ? [...result.data] : []
+
+            console.log('notifications', notifications)
+
+            counter = notifications.length;
+
+            renderNotifications()
+          })
+      } catch (error) {
+        console.log('error', error)
+        this.appendError('server-error', error.message ?? error)
+      }
+
+    }
+
+    const createNewNotification = async () => {
+      socket.emit('create-notification', {
+        userId,
+        title: 'New Notification ' + counter,
+        body: 'New Notification body ' + counter
+      })
+
+      counter++
+    }
+
+    const _createNewNotification = async () => {
+      const headers = new Headers();
+      headers.append("Authorization", `Bearer ${token}`);
+      headers.append("Content-Type", "application/json");
+
+      const requestOptions = {
+        method: 'POST', headers, redirect: 'follow', body: JSON.stringify({
+          title: 'New notification ' + new Date().getTime(),
+          body: 'Hello world ' + new Date().getTime()
+        }),
+      };
+
+      fetch(`${baseURL}/api/users/${userId}/notifications`, requestOptions)
+        .then(res => {
+          if (res.status != 200) {
+            appendError('Something Went wrong', 'Failed creating a new notification')
+          }
+
+          console.log('HERE', res)
+        })
+        .catch(error => {
+          console.log('createNewNotification error ', error.message);
+        });
+    }
+
+    const getIdAndTokenParams = () => {
+      const url = new URL(window.location.href);
+      const params = new URLSearchParams(url.search);
+
+      const userIdQueryParam = params.get('userId');
+      const tokenQueryParam = params.get('token');
+
+      if (!userIdQueryParam || !tokenQueryParam) {
+        appendError('client-app-error', 'User id and auth token required')
+
+        return null
+      }
+
+      userId = userIdQueryParam
+      token = tokenQueryParam
+
+      console.log(`User Id: ${userId}`);
+      console.log(`Auth Token: ${token}`);
+
+      return { userId: userIdQueryParam, token: tokenQueryParam }
+    };
+
+    const appendError = (title, body) => {
+      const list = document.getElementById('error-list');
+
+      const listItem = document.createElement('li');
+
+      listItem.classList.add('cursor-pointer', 'rounded');
+      listItem.setAttribute('id', 'igp-auth-error');
+
+      const listItemInnerHtml = `
+                  <div class="flex items-center p-4 text-sm text-gray-800 border border-gray-300 rounded-lg bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600" role="alert">
+                      <svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"></path>
+                      </svg>
+                      <div>
+                          <span class="font-medium"><strong>${title} </strong></span> ${body}
+                      </div>
+                  </div>
+            `;
+
+      listItem.innerHTML = listItemInnerHtml
+
+      list.appendChild(listItem)
+    };
+
+    const appendNotification = (title, body) => {
+      const list = document.getElementById('notification-list');
+
+      const listItem = document.createElement('li');
+
+      listItem.classList.add('cursor-pointer', 'rounded');
+      listItem.setAttribute('id', 'igp-auth-error');
+
+      const listItemInnerHtml = `
+                  <div class="flex items-center p-4 text-sm text-gray-800 border border-gray-300 rounded-lg bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600" role="alert">
+                      <svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"></path>
+                      </svg>
+                      <div>
+                          <span class="font-medium"><strong>${title} </strong></span> ${body}
+                      </div>
+                  </div>
+            `;
+
+      listItem.innerHTML = listItemInnerHtml
+
+      list.appendChild(listItem)
+    };
+
   </script>
 </body>
 

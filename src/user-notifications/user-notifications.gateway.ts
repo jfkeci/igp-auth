@@ -1,7 +1,6 @@
 import { logger } from '../utils/logger';
 import { Server, Socket } from 'socket.io';
 import { JwtService } from '../utils/services/jwt.service';
-import Notification from '../notifications/interfaces/notification.interface';
 import { UserNotificationService } from './user-notifications.service';
 import { CreateUserNotificationParams } from './interface/create-user-notification-params.interface';
 import { createNotificationValidationSchema } from './user-notifications.validation';
@@ -31,46 +30,69 @@ export class UserNotificationsGateway {
 
   private middleware(
     socket: ExtendedSocket,
-    next: (err?: Error) => void,
+    next: (err?: Error) => void
   ): void {
     const token = socket.handshake.query.token as string;
 
-    if (!token) return next(new Error('Authentication error'));
+    if (!token) {
+      logger.error(`Websocket Auth Error: Token missing`);
+      socket.emit('authentication-error', 'Token missing');
+      return;
+    }
 
-    const userId = this.jwtService.verify(token);
+    let userId: string | undefined;
 
-    console.log('websocket middleware userId', userId);
+    try {
+      userId = this.jwtService.verify(token);
+    } catch (error) {
+      logger.error(`Websocket Auth Error: Invalid token ${token}`);
+      socket.emit('authentication-error', 'Invalid token');
+      return;
+    }
 
-    if (!userId) return next(new Error('Unauthorized'));
+    if (!userId) {
+      logger.error(`Websocket Auth Error: Invalid token ${token}`);
+      socket.emit('authentication-error', 'Invalid token');
+      return;
+    }
 
-    socket.userId = userId;
+    socket.userId = userId as string;
+
+    next();
   }
 
   private onConnection(socket: ExtendedSocket): void {
     logger.info(`User ${socket.userId} connected to socket ${socket.id}`);
 
-    socket.on('create-notification', (data: CreateUserNotificationParams) => {
-      const { error } = createNotificationValidationSchema.validate(data);
+    socket.on(
+      'create-notification',
+      async (data: CreateUserNotificationParams) => {
+        logger.debug(
+          `Creating new notification: ${Object.values(data).join(', ')}`
+        );
 
-      if (socket.userId !== data.userId) {
-        socket.emit('authorization-error', 'Forbidden');
-        return;
+        if (socket.userId !== data.userId) {
+          socket.emit('authorization-error', 'Forbidden');
+          return;
+        }
+
+        const { error } = createNotificationValidationSchema.validate(data);
+
+        if (error) {
+          socket.emit('validation-error', error.details[0].message);
+        } else {
+          const newNotification =
+            await this.userNotificationService.createUserNotification(data);
+
+          socket.emit('new-notification', newNotification);
+        }
       }
-
-      if (error) {
-        socket.emit('validation-error', error.details[0].message);
-      } else {
-        this.userNotificationService.createUserNotification(data);
-      }
-    });
-  }
-
-  public emitNotification(userId: string, notification: Notification): void {
-    const sockets = Object.values(this.io.sockets.sockets).filter(
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (socket: any) => socket.userId === userId,
     );
 
-    sockets.forEach((socket) => socket.emit('new-notification', notification));
+    socket.on('disconnect', () => {
+      logger.info(
+        `User ${socket.userId} disconnected from socket ${socket.id}`
+      );
+    });
   }
 }
