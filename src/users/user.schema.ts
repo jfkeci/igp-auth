@@ -36,30 +36,30 @@ const UserSchema = new Schema(
   {
     username: {
       type: String,
-      unique: true,
+      unique: true
     },
     email: {
       type: String,
       required: true,
       unique: true,
-      trim: true,
+      trim: true
     },
     password: {
-      type: String,
+      type: String
     },
     isEmailVerified: {
       type: Boolean,
-      default: false,
+      default: false
     },
     emailVerificationCode: {
       type: String,
-      default: () => crypto.randomBytes(32).toString('hex'),
+      default: () => crypto.randomBytes(32).toString('hex')
     },
     passwordResetCode: {
-      type: String,
-    },
+      type: String
+    }
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 UserSchema.pre<User>('save', async function (next) {
@@ -73,7 +73,7 @@ UserSchema.pre<User>('save', async function (next) {
 });
 
 UserSchema.methods.isValidPassword = async function (
-  password: string,
+  password: string
 ): Promise<Error | boolean> {
   return await bcrypt.compare(password, this.password);
 };

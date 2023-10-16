@@ -16,7 +16,7 @@ export class UserRoutes {
     if (this.config.isEnv('development')) {
       // [x] Get users
       logger.info(
-        `${controller.constructor.name} GET ${apiPrefix}${this.path} route`,
+        `${controller.constructor.name} GET ${apiPrefix}${this.path} route`
       );
       this.router.get(`${this.path}`, controller.getUsers.bind(controller));
     }

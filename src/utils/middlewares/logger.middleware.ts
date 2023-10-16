@@ -5,28 +5,17 @@ import { NextFunction, Request, Response } from 'express';
 export const LoggerMiddleware = (
   req: Request,
   _: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   const config = new ConfigService();
 
-  if (config.isEnv('development')) {
-    logger.info(
-      `[${process.env.API_NAME}] REQUEST ${req.method} ${
-        req.originalUrl
-      } \n- Body ${JSON.stringify(req.body)}\n- Params: ${JSON.stringify(
-        req.params,
-      )}\n- Query: ${JSON.stringify(req.query)}`,
-    );
-  } else {
-    /** Log on http level during production */
-    logger.http(
-      `[${process.env.API_NAME}] REQUEST ${req.method} ${
-        req.originalUrl
-      } \n- Body ${JSON.stringify(req.body)}\n- Params: ${JSON.stringify(
-        req.params,
-      )}\n- Query: ${JSON.stringify(req.query)}`,
-    );
-  }
+  logger.http(
+    `[${process.env.API_NAME}] REQUEST ${req.method} ${
+      req.originalUrl
+    } \n- Body ${JSON.stringify(req.body)}\n- Params: ${JSON.stringify(
+      req.params
+    )}\n- Query: ${JSON.stringify(req.query)}`
+  );
 
   next();
 };

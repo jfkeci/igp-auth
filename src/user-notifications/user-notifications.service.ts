@@ -18,7 +18,7 @@ export class UserNotificationService {
   }
 
   async createUserNotification(
-    data: CreateUserNotificationParams,
+    data: CreateUserNotificationParams
   ): Promise<Notification> {
     let notification: Notification;
 
@@ -27,14 +27,14 @@ export class UserNotificationService {
     } catch (error) {
       throw new HttpException(
         HttpStatus.BAD_REQUEST,
-        `Failed creating notification|${error}`,
+        `Failed creating notification|${error}`
       );
     }
 
     if (!notification) {
       throw new HttpException(
         HttpStatus.BAD_REQUEST,
-        'Failed creating notification',
+        'Failed creating notification'
       );
     }
 
