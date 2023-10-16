@@ -23,20 +23,22 @@ export class JwtService {
 
   generateToken(data: GenUserTokenParams): string {
     return jwt.sign({ id: data.id } as JwtPayload, data.secret ?? this.secret, {
-      expiresIn: data.expiry ?? `${this.expiry}d`,
+      expiresIn: data.expiry ?? `${this.expiry}d`
     });
   }
 
-  private decode(token: string): JwtPayload | undefined {
+  private decode(token: string): string | undefined {
     if (token) {
       try {
         const decoded = jwt.decode(token) as JwtPayload;
 
-        return decoded;
+        if (decoded) return decoded.id;
+
+        return undefined;
       } catch (error) {
         throw new HttpException(
           HttpStatus.UNAUTHORIZED,
-          `Unauthorized|Failed parsing jwt|${error}`,
+          `Unauthorized|Failed parsing jwt|${error}`
         );
       }
     }
@@ -46,13 +48,15 @@ export class JwtService {
 
   verify(token: string): string | undefined {
     try {
-      const { id } = jwt.verify(token, this.secret) as JwtPayload;
+      const payload = jwt.verify(token, this.secret) as JwtPayload;
 
-      return id;
+      if (payload) return payload.id as string;
+
+      return undefined;
     } catch (error) {
       throw new HttpException(
         HttpStatus.UNAUTHORIZED,
-        `Unauthorized|Failed parsing jwt|${error}`,
+        `Unauthorized|Failed parsing jwt|${error}`
       );
     }
   }
@@ -71,18 +75,6 @@ export class JwtService {
     }
 
     if (token) return token;
-
-    return null;
-  }
-
-  getRequestAuthTokenPayload(req: Request): JwtPayload | null {
-    const token = this.getTokenFromHeaders(req);
-
-    if (token) {
-      const payload = this.decode(token);
-
-      if (payload) return payload;
-    }
 
     return null;
   }
