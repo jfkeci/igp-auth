@@ -13,11 +13,14 @@
     "start:prod": "npm run build && npm start",
     "dev": "tsc-watch --onSuccess \"node ./dist/index.js\"",
     "build": "tsc -b",
+    "build:dev": "tsc -b && copy-assets",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write 'src/**/*.ts' 'test/**/*.ts'",
     "format:check": "prettier --check 'src/**/*.ts' 'test/**/*.ts'",
-    "copy-assets": "rm -rf dist/public && mkdir dist/public && cp src/public/* dist/public/"
+    "copy-assets": "rm -rf dist/public && mkdir dist/public && cp src/public/* dist/public/",
+    "prepare": "husky install",
+    "postinstall": "npm run build"
   },
   "jest": {
     "transform": {
@@ -86,6 +89,7 @@
     "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
+    "husky": "^8.0.3",
     "jest": "^29.7.0",
     "mongodb-memory-server": "^9.0.1",
     "prettier": "^3.0.3",
