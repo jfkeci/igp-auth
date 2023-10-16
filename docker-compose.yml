@@ -15,7 +15,7 @@ services:
       API_PREFIX: api
       DATABASE_URL: mongodb://mongodb:27017/igp-auth
       LOG_LEVEL: error
-      JWT_SECRET: fh7sd89fHs412nojADsaE45
+      JWT_SECRET: fh7sd89fHs412nojADsdaaE45
       JWT_EXPIRY: 30
 
   mongodb:

@@ -10,8 +10,9 @@
   "scripts": {
     "test": "jest",
     "start": "node dist/index.js",
+    "start:prod": "npm run build && npm start",
     "dev": "tsc-watch --onSuccess \"node ./dist/index.js\"",
-    "build": "tsc -b && npm run copy-assets",
+    "build": "tsc -b",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write 'src/**/*.ts' 'test/**/*.ts'",
@@ -75,7 +76,6 @@
     "@types/express": "^4.17.19",
     "@types/jest": "^29.5.5",
     "@types/jsonwebtoken": "^9.0.3",
-    "@types/mongoose": "^5.11.97",
     "@types/node": "^20.8.4",
     "@types/nodemailer": "^6.4.11",
     "@types/supertest": "^2.0.14",
