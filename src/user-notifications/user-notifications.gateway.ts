@@ -1,6 +1,8 @@
 import { logger } from '../utils/logger';
 import { Server, Socket } from 'socket.io';
 import { JwtService } from '../utils/services/jwt.service';
+import { HttpStatus } from '../utils/enums/http-status.enum';
+import { HttpException } from '../utils/classes/http-exception.class';
 import { UserNotificationService } from './user-notifications.service';
 import { CreateUserNotificationParams } from './interface/create-user-notification-params.interface';
 import { createNotificationValidationSchema } from './user-notifications.validation';
@@ -37,7 +39,7 @@ export class UserNotificationsGateway {
     if (!token) {
       logger.error(`Websocket Auth Error: Token missing`);
       socket.emit('authentication-error', 'Token missing');
-      return;
+      return next(new HttpException(HttpStatus.UNAUTHORIZED, 'Token missing'));
     }
 
     let userId: string | undefined;
@@ -47,13 +49,13 @@ export class UserNotificationsGateway {
     } catch (error) {
       logger.error(`Websocket Auth Error: Invalid token ${token}`);
       socket.emit('authentication-error', 'Invalid token');
-      return;
+      return next(new HttpException(HttpStatus.BAD_REQUEST, 'Invalid Token'));
     }
 
     if (!userId) {
       logger.error(`Websocket Auth Error: Invalid token ${token}`);
       socket.emit('authentication-error', 'Invalid token');
-      return;
+      return next(new HttpException(HttpStatus.BAD_REQUEST, 'Invalid Token'));
     }
 
     socket.userId = userId as string;
