@@ -23,7 +23,7 @@ export class UsersController implements Controller {
   async getUsers(
     req: Request,
     res: Response,
-    next: NextFunction,
+    next: NextFunction
   ): Promise<void> {
     try {
       const result = await this.userService._find();
@@ -31,7 +31,7 @@ export class UsersController implements Controller {
       const response: ResponseFormat<User[]> = {
         status: HttpStatus.OK,
         type: ResponseType.User,
-        data: result,
+        data: result
       };
 
       res.status(HttpStatus.OK).json(response);

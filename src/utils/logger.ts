@@ -6,7 +6,7 @@ const colors = {
   warn: 'yellow',
   debug: 'green',
   verbose: 'white',
-  http: 'magenta',
+  http: 'magenta'
 };
 
 const loggerConfig = () => {
@@ -19,8 +19,8 @@ const loggerConfig = () => {
           datePattern: 'YYYY-MM-DD',
           zippedArchive: true,
           maxSize: '20m',
-          maxFiles: '14d',
-        }),
+          maxFiles: '14d'
+        })
       ]
     : [new winston.transports.Console()];
 
@@ -35,8 +35,8 @@ const loggerConfig = () => {
         return `${timestamp} [${label || 'iGP Auth'}] ${level}: ${message}${
           stack ? '\n' + stack : ''
         }`;
-      }),
-    ),
+      })
+    )
   });
 };
 

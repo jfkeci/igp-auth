@@ -30,7 +30,7 @@ export class AuthService {
 
   async registerUser(
     params: RegisterUserParams,
-    origin: string,
+    origin: string
   ): Promise<User> {
     let existingUser = await this.userService._findOne({ email: params.email });
 
@@ -40,7 +40,7 @@ export class AuthService {
 
     if (params.username) {
       existingUser = await this.userService._findOne({
-        username: params.username,
+        username: params.username
       });
     }
 
@@ -51,7 +51,7 @@ export class AuthService {
     const user = await this.userService.createOne({
       username: params.username ?? undefined,
       email: params.email,
-      password: params.password,
+      password: params.password
     });
 
     /**
@@ -76,18 +76,18 @@ export class AuthService {
         <br><br>
         <h4>Click here: <a href="${emailVerificationUrl}">
         Confirm Email
-        </a></h4></html>`,
+        </a></h4></html>`
       });
     } catch (error) {
       throw new HttpException(
         HttpStatus.INTERNAL_SERVER_ERROR,
-        'Something went wrong|Failed sending email',
+        'Something went wrong|Failed sending email'
       );
     }
 
     return {
       ...user,
-      password: null,
+      password: null
     };
   }
 
@@ -100,18 +100,18 @@ export class AuthService {
 
     const isValidPassword = await bcrypt.compare(
       params.password as string,
-      user.password as string,
+      user.password as string
     );
 
     if (!isValidPassword) {
       throw new HttpException(
         HttpStatus.UNAUTHORIZED,
-        'Invalid email or password',
+        'Invalid email or password'
       );
     }
 
     user.token = await this.jwtService.generateToken({
-      id: user._id.toString(),
+      id: user._id.toString()
     });
 
     return { ...user, password: null };
@@ -119,7 +119,7 @@ export class AuthService {
 
   async verifyEmail(
     params: VerifyEmailParams,
-    origin: string,
+    origin: string
   ): Promise<RedirectUrl> {
     const user = await this.userService._findById(params.userId);
 
@@ -134,7 +134,7 @@ export class AuthService {
     if (user.emailVerificationCode !== params.token) {
       throw new HttpException(
         HttpStatus.CONFLICT,
-        'Invalid email verification code',
+        'Invalid email verification code'
       );
     }
 
@@ -148,7 +148,7 @@ export class AuthService {
     }
 
     const authToken = await this.jwtService.generateToken({
-      id: user._id.toString(),
+      id: user._id.toString()
     });
 
     new Promise<void>((resolve, reject) => {
@@ -157,7 +157,7 @@ export class AuthService {
           await this.userNotificationService.createUserNotification({
             userId: user._id as string,
             title: 'Account creation completed',
-            body: 'Your email is verified',
+            body: 'Your email is verified'
           });
         } catch (error) {
           logger.error(error);
@@ -169,7 +169,7 @@ export class AuthService {
     });
 
     return {
-      url: `${origin}/api/pages/confirm-email?userId=${user._id}&token=${authToken}`,
+      url: `${origin}/api/pages/confirm-email?userId=${user._id}&token=${authToken}`
     };
   }
 }

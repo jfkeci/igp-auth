@@ -12,12 +12,12 @@ export class EmailService {
       pass: creds.pass,
       host: creds.smtp.host,
       port: creds.smtp.port,
-      secure: false,
+      secure: false
     };
 
     return nodemailer.createTransport({
       ...smtp,
-      auth: { user: smtp.user, pass: smtp.pass },
+      auth: { user: smtp.user, pass: smtp.pass }
     });
   }
 

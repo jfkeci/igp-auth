@@ -8,7 +8,7 @@ export class NotificationService {
   async _find(
     filter?: FilterQuery<Notification>,
     projection?: ProjectionType<Notification> | null,
-    options?: QueryOptions<Notification> | null,
+    options?: QueryOptions<Notification> | null
   ): Promise<Notification[]> {
     return await this.notificationRepo._find(filter ?? {}, projection, options);
   }

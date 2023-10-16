@@ -1,7 +1,7 @@
 import {
   loginValidationSchema,
   registerValidationSchema,
-  verifyEmailParamsValidationSchema,
+  verifyEmailParamsValidationSchema
 } from './auth.validation';
 import { Router } from 'express';
 import { AuthController } from './auth.controller';
@@ -20,32 +20,32 @@ export class AuthRoutes {
 
     // [ ] Login any user
     logger.info(
-      `${controller.constructor.name} POST ${apiPrefix}${this.path}/login route`,
+      `${controller.constructor.name} POST ${apiPrefix}${this.path}/login route`
     );
     this.router.post(
       `${this.path}/login`,
       [ValidationMiddleware(loginValidationSchema)],
-      controller.loginUser.bind(controller),
+      controller.loginUser.bind(controller)
     );
 
     // [ ] Register user
     logger.info(
-      `${controller.constructor.name} POST ${apiPrefix}${this.path}/register route`,
+      `${controller.constructor.name} POST ${apiPrefix}${this.path}/register route`
     );
     this.router.post(
       `${this.path}/register`,
       [ValidationMiddleware(registerValidationSchema)],
-      controller.registerUser.bind(controller),
+      controller.registerUser.bind(controller)
     );
 
     // [ ] Verify user email
     logger.info(
-      `${controller.constructor.name} GET ${apiPrefix}${this.path}/emails/verify route`,
+      `${controller.constructor.name} GET ${apiPrefix}${this.path}/emails/verify route`
     );
     this.router.get(
       `${this.path}/emails/verify`,
       [ValidationMiddleware(verifyEmailParamsValidationSchema, 'query')],
-      controller.verifyUserEmail.bind(controller),
+      controller.verifyUserEmail.bind(controller)
     );
 
     return this.router;

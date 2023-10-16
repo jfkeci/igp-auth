@@ -4,7 +4,7 @@ import {
   UpdateQuery,
   QueryOptions,
   ProjectionType,
-  UpdateWithAggregationPipeline,
+  UpdateWithAggregationPipeline
 } from 'mongoose';
 import userSchema from './user.schema';
 import User from './interfaces/user.interface';
@@ -15,7 +15,7 @@ export class UserRepo {
   async _findById(
     id: string | ObjectId,
     projection?: ProjectionType<User> | null,
-    options?: QueryOptions<User> | null,
+    options?: QueryOptions<User> | null
   ) {
     return await this.user.findById(id, projection, options);
   }
@@ -23,7 +23,7 @@ export class UserRepo {
   async _findOne(
     filter?: FilterQuery<User>,
     projection?: ProjectionType<User> | null,
-    options?: QueryOptions<User> | null,
+    options?: QueryOptions<User> | null
   ) {
     return await this.user.findOne(filter, projection, options);
   }
@@ -31,7 +31,7 @@ export class UserRepo {
   async _updateOne(
     filter?: FilterQuery<User>,
     update?: UpdateQuery<User> | UpdateWithAggregationPipeline,
-    options?: QueryOptions<User> | null,
+    options?: QueryOptions<User> | null
   ) {
     return await this.user.updateOne(filter, update, options);
   }
@@ -39,14 +39,14 @@ export class UserRepo {
   async _findByIdAndUpdate(
     id?: ObjectId | string,
     update?: UpdateQuery<User>,
-    options?: QueryOptions<User> | null,
+    options?: QueryOptions<User> | null
   ): Promise<User | null> {
     return await this.user.findByIdAndUpdate(id, update, options);
   }
 
   async _findByIdAndDelete(
     id?: ObjectId | string,
-    options?: QueryOptions<User> | null,
+    options?: QueryOptions<User> | null
   ): Promise<User | null> {
     return await this.user.findByIdAndDelete(id, options);
   }
@@ -59,7 +59,7 @@ export class UserRepo {
 
   async _updateMany(
     query: FilterQuery<User>,
-    updateData: UpdateQuery<User>,
+    updateData: UpdateQuery<User>
   ): Promise<number> {
     const result = await this.user.updateMany(query, updateData).exec();
 
@@ -75,7 +75,7 @@ export class UserRepo {
   async _find(
     filter?: FilterQuery<User>,
     projection?: ProjectionType<User> | null,
-    options?: QueryOptions<User> | null,
+    options?: QueryOptions<User> | null
   ): Promise<User[]> {
     return await this.user.find(filter ?? {}, projection, options);
   }

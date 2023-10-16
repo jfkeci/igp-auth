@@ -10,11 +10,11 @@ export const swaggerDocs = swaggerJsDoc({
       contact: {
         name: 'Jakov Filip Saboliček',
         url: 'https://github.com/jfkeci',
-        email: 'ja.lip132@gmail.com',
-      },
+        email: 'ja.lip132@gmail.com'
+      }
     },
     host: 'http://localhost:3000',
-    basePath: '/api',
+    basePath: '/api'
   },
-  apis: ['../../**/*.schema.ts', '../../**/*.routes.ts'],
+  apis: ['../../**/*.schema.ts', '../../**/*.routes.ts']
 });

@@ -30,7 +30,7 @@ export class UserNotificationsController {
     const response: ResponseFormat<Notification[]> = {
       status: HttpStatus.OK,
       type: ResponseType.Notification,
-      data: result,
+      data: result
     };
 
     return res.status(HttpStatus.OK).json(response);
@@ -43,13 +43,13 @@ export class UserNotificationsController {
     const result = await this.userNotificationService.createUserNotification({
       userId,
       title,
-      body,
+      body
     });
 
     const response: ResponseFormat<Notification> = {
       status: HttpStatus.CREATED,
       type: ResponseType.Notification,
-      data: result,
+      data: result
     };
 
     res.status(HttpStatus.CREATED).json(response);

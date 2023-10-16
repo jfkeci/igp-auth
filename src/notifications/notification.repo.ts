@@ -4,7 +4,7 @@ import {
   UpdateQuery,
   QueryOptions,
   ProjectionType,
-  UpdateWithAggregationPipeline,
+  UpdateWithAggregationPipeline
 } from 'mongoose';
 import NotificationSchema from './notification.schema';
 import Notification from './interfaces/notification.interface';
@@ -15,7 +15,7 @@ export class NotificationRepo {
   async _find(
     filter?: FilterQuery<Notification>,
     projection?: ProjectionType<Notification> | null,
-    options?: QueryOptions<Notification> | null,
+    options?: QueryOptions<Notification> | null
   ): Promise<Notification[]> {
     return await this.notification.find(filter ?? {}, projection, options);
   }
@@ -23,7 +23,7 @@ export class NotificationRepo {
   async _findById(
     id: string | ObjectId,
     projection?: ProjectionType<Notification> | null,
-    options?: QueryOptions<Notification> | null,
+    options?: QueryOptions<Notification> | null
   ) {
     return await this.notification.findById(id, projection, options);
   }
@@ -31,7 +31,7 @@ export class NotificationRepo {
   async _findOne(
     filter?: FilterQuery<Notification>,
     projection?: ProjectionType<Notification> | null,
-    options?: QueryOptions<Notification> | null,
+    options?: QueryOptions<Notification> | null
   ) {
     return await this.notification.findOne(filter, projection, options);
   }
@@ -39,7 +39,7 @@ export class NotificationRepo {
   async _updateOne(
     filter?: FilterQuery<Notification>,
     update?: UpdateQuery<Notification> | UpdateWithAggregationPipeline,
-    options?: QueryOptions<Notification> | null,
+    options?: QueryOptions<Notification> | null
   ) {
     return await this.notification.updateOne(filter, update, options);
   }
@@ -47,14 +47,14 @@ export class NotificationRepo {
   async _findByIdAndUpdate(
     id?: ObjectId | string,
     update?: UpdateQuery<Notification>,
-    options?: QueryOptions<Notification> | null,
+    options?: QueryOptions<Notification> | null
   ): Promise<Notification | null> {
     return await this.notification.findByIdAndUpdate(id, update, options);
   }
 
   async _findByIdAndDelete(
     id?: ObjectId | string,
-    options?: QueryOptions<Notification> | null,
+    options?: QueryOptions<Notification> | null
   ): Promise<Notification | null> {
     return await this.notification.findByIdAndDelete(id, options);
   }
@@ -67,7 +67,7 @@ export class NotificationRepo {
 
   async _updateMany(
     query: FilterQuery<Notification>,
-    updateData: UpdateQuery<Notification>,
+    updateData: UpdateQuery<Notification>
   ): Promise<number> {
     const result = await this.notification.updateMany(query, updateData).exec();
 

@@ -18,29 +18,29 @@ export class UserNotificationRoutes {
 
     // [x] Get user notifications
     logger.info(
-      `${controller.constructor.name} get ${apiPrefix}${this.path} route`,
+      `${controller.constructor.name} get ${apiPrefix}${this.path} route`
     );
     this.router.get(
       `${this.path}`,
       [
         AuthMiddleware(),
-        ValidationMiddleware(userIdParamValidationSchema, 'params'),
+        ValidationMiddleware(userIdParamValidationSchema, 'params')
       ],
-      controller.getUserNotifications.bind(controller),
+      controller.getUserNotifications.bind(controller)
     );
 
     // [x] Create user notifications
     logger.info(
-      `${controller.constructor.name} POST ${apiPrefix}${this.path} route`,
+      `${controller.constructor.name} POST ${apiPrefix}${this.path} route`
     );
     this.router.post(
       `${this.path}`,
       [
         AuthMiddleware(),
         ValidationMiddleware(userIdParamValidationSchema, 'params'),
-        ValidationMiddleware(createUserNotificationValidationSchema),
+        ValidationMiddleware(createUserNotificationValidationSchema)
       ],
-      controller.createUserNotification.bind(controller),
+      controller.createUserNotification.bind(controller)
     );
 
     return this.router;

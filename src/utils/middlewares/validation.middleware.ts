@@ -4,19 +4,19 @@ import { Request, Response, NextFunction, RequestHandler } from 'express';
 
 export const ValidationMiddleware = (
   schema: Joi.Schema,
-  subject?: 'body' | 'params' | 'query',
+  subject?: 'body' | 'params' | 'query'
 ): RequestHandler => {
   return async (
     req: Request,
     res: Response,
-    next: NextFunction,
+    next: NextFunction
   ): Promise<void> => {
     subject = subject ?? 'body';
 
     const validationOptions = {
       abortEarly: false,
       allowUnknown: true,
-      stripUnknown: true,
+      stripUnknown: true
     };
 
     try {

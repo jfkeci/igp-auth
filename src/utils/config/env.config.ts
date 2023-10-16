@@ -19,8 +19,8 @@ export class ConfigService {
     jwtExpiry: Number(process.env.JWT_EXPIRY) as number,
     logLevel: process.env.LOG_LEVEL as string,
     logRotationEnabled: JSON.parse(
-      process.env.LOG_ROTATION_ENABLED ?? 'false',
-    ) as boolean,
+      process.env.LOG_ROTATION_ENABLED ?? 'false'
+    ) as boolean
   };
 
   public get<T>(key: keyof typeof this.envConfig): T {

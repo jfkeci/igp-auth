@@ -26,20 +26,20 @@ export class AuthController implements Controller {
   async loginUser(
     req: Request,
     res: Response,
-    next: NextFunction,
+    next: NextFunction
   ): Promise<void> {
     const { email, password } = req.body;
 
     try {
       const result = await this.authService.loginUser({
         email,
-        password,
+        password
       } as LoginUserParams);
 
       const response: ResponseFormat<User> = {
         type: ResponseType.User,
         status: HttpStatus.OK,
-        data: result,
+        data: result
       };
 
       res.status(HttpStatus.OK).json(response);
@@ -51,7 +51,7 @@ export class AuthController implements Controller {
   async registerUser(
     req: Request,
     res: Response,
-    next: NextFunction,
+    next: NextFunction
   ): Promise<void> {
     const origin = getRequestOrigin(req);
 
@@ -63,9 +63,9 @@ export class AuthController implements Controller {
           confirmPassword,
           password,
           username,
-          email,
+          email
         } as RegisterUserParams,
-        origin,
+        origin
       );
 
       res.status(HttpStatus.NO_CONTENT).send();
@@ -77,7 +77,7 @@ export class AuthController implements Controller {
   async verifyUserEmail(
     req: Request,
     res: Response,
-    next: NextFunction,
+    next: NextFunction
   ): Promise<void> {
     const origin = getRequestOrigin(req);
 
@@ -86,7 +86,7 @@ export class AuthController implements Controller {
 
       const result = await this.authService.verifyEmail(
         { userId: userId as string, token: token as string },
-        origin,
+        origin
       );
 
       res.status(HttpStatus.SEE_OTHER).redirect(result.url);

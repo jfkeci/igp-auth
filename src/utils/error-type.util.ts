@@ -7,7 +7,7 @@ export const determineErrorType = (
     | Error
     | ValidationError
     | mongoose.Error.CastError
-    | mongoose.Error.ValidationError,
+    | mongoose.Error.ValidationError
 ): ErrorType => {
   if (error instanceof mongoose.Error.ValidationError) {
     return ErrorType.MongooseValidationError;

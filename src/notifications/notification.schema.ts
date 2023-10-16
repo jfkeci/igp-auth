@@ -34,19 +34,19 @@ const NotificationSchema = new Schema(
   {
     title: {
       type: String,
-      required: true,
+      required: true
     },
     body: {
       type: String,
-      required: false,
+      required: false
     },
     userId: {
       type: Schema.Types.ObjectId,
       ref: 'User',
-      required: true,
-    },
+      required: true
+    }
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 export default model<Notification>('Notification', NotificationSchema);

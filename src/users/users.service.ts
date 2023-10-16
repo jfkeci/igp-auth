@@ -16,7 +16,7 @@ export class UserService {
     } catch (error) {
       throw new HttpException(
         HttpStatus.BAD_REQUEST,
-        `Failed creating user|${error}`,
+        `Failed creating user|${error}`
       );
     }
 
@@ -50,7 +50,7 @@ export class UserService {
   async _findOne(
     filter?: FilterQuery<User>,
     projection?: ProjectionType<User> | null,
-    options?: QueryOptions<User> | null,
+    options?: QueryOptions<User> | null
   ) {
     return await this.usersRepo._findOne(filter, projection, options);
   }
@@ -58,7 +58,7 @@ export class UserService {
   async _findById(
     id: string | ObjectId,
     projection?: ProjectionType<User> | null,
-    options?: QueryOptions<User> | null,
+    options?: QueryOptions<User> | null
   ) {
     return await this.usersRepo._findById(id, projection, options);
   }
@@ -66,7 +66,7 @@ export class UserService {
   async _find(
     filter?: FilterQuery<User>,
     projection?: ProjectionType<User> | null,
-    options?: QueryOptions<User> | null,
+    options?: QueryOptions<User> | null
   ): Promise<User[]> {
     return await this.usersRepo._find(filter ?? {}, projection, options);
   }

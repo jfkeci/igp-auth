@@ -15,9 +15,9 @@ const app = new App(
     new StaticController(),
     new AuthController(),
     new UsersController(),
-    new UserNotificationsController(),
+    new UserNotificationsController()
   ],
-  Number(process.env.API_PORT),
+  Number(process.env.API_PORT)
 );
 
 app.listen();

@@ -1,5 +1,4 @@
 import { logger } from '../logger';
-import { ConfigService } from '../config/env.config';
 import { NextFunction, Request, Response } from 'express';
 
 export const LoggerMiddleware = (
@@ -7,8 +6,6 @@ export const LoggerMiddleware = (
   _: Response,
   next: NextFunction
 ) => {
-  const config = new ConfigService();
-
   logger.http(
     `[${process.env.API_NAME}] REQUEST ${req.method} ${
       req.originalUrl

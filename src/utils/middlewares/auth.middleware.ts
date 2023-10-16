@@ -8,7 +8,7 @@ export const AuthMiddleware = (): RequestHandler => {
   return async (
     req: Request,
     _: Response,
-    next: NextFunction,
+    next: NextFunction
   ): Promise<void> => {
     const jwtService = new JwtService();
     const userService = new UserService();
