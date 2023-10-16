@@ -17,4 +17,8 @@ export class StaticController implements Controller {
   getConfirmEmailPage(req: Request, res: Response) {
     res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
   }
+
+  getErrorPage(req: Request, res: Response) {
+    res.sendFile(path.join(__dirname, '..', 'public', 'error.html'));
+  }
 }

@@ -13,14 +13,22 @@ export class StaticRoutes {
     const apiPrefix = this.config.get<string>('prefix');
 
     if (this.config.isEnv('development')) {
-      // [x] Serve confirm email pages
+      // [x] Serve confirm email page
       logger.info(
-        `${controller.constructor.name} GET ${apiPrefix}${this.path}/confirm-email route`,
+        `${controller.constructor.name} GET ${apiPrefix}${this.path}/confirm-email page route`
       );
-
       this.router.get(
         `${this.path}/confirm-email`,
-        controller.getConfirmEmailPage.bind(controller),
+        controller.getConfirmEmailPage.bind(controller)
+      );
+
+      // [x] Serve error page page
+      logger.info(
+        `${controller.constructor.name} GET ${apiPrefix}${this.path}/error page route`
+      );
+      this.router.get(
+        `${this.path}/error`,
+        controller.getErrorPage.bind(controller)
       );
     }
 
