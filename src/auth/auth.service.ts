@@ -110,6 +110,9 @@ export class AuthService {
       );
     }
 
+    /**
+     * While testing using Postman, the postman client will automatically save the userId and token to the collection environment, this will enable you to use /api/users/:userId/notifications endpoints for getting user notificaitons (GET) and creating new user notificaitons (POST)
+     */
     user.token = await this.jwtService.generateToken({
       id: user._id.toString()
     });
