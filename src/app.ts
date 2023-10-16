@@ -36,9 +36,6 @@ export class App {
 
     this.initMiddleware();
 
-    this.initErrorMiddleware();
-    this.initLoggerMiddleware();
-
     this.initDbConnection();
 
     this.initControllers(controllers);
@@ -58,6 +55,9 @@ export class App {
     });
 
     this.initGateways(this.io);
+
+    this.initLoggerMiddleware();
+    this.initErrorMiddleware();
   }
 
   private initMiddleware(): void {
