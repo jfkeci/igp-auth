@@ -12,7 +12,7 @@ export class ConfigValidationService {
     JWT_SECRET: Joi.string().required(),
     JWT_EXPIRY: Joi.number().required(),
     LOG_LEVEL: Joi.string().required(),
-    LOG_ROTATION_ENABLED: Joi.boolean().required(),
+    LOG_ROTATION_ENABLED: Joi.boolean().optional(),
   }).unknown();
 
   public validateEnv(): void {
