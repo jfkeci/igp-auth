@@ -41,6 +41,8 @@ export class App {
 
     this.initDbConnection();
 
+    this.initControllers(controllers);
+
     this.express.use('/api', (req, res) => {
       res.send('Welcome to iGP Auth API');
     });
@@ -52,12 +54,10 @@ export class App {
     this.httpServer = createServer(this.express);
 
     this.io = new IOServer(this.httpServer, {
-      cors: { origin: '*' },
+      cors: { origin: '*' }
     });
 
     this.initGateways(this.io);
-
-    this.initControllers(controllers);
   }
 
   private initMiddleware(): void {
@@ -82,8 +82,10 @@ export class App {
   }
 
   private initControllers(controllers: Controller[]): void {
+    const apiPrefix = this.config.get<string>('prefix');
+
     controllers.forEach((controller: Controller) => {
-      this.express.use('/api/', controller.router);
+      this.express.use(`/${apiPrefix}`, controller.router);
 
       logger.info(`${controller.constructor.name} initialized`);
     });
